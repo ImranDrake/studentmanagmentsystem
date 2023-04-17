@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Student Management System</title>
+    <link rel="stylesheet" href="./style.css">
+    <!-- <script src="script.js"></script> -->
+</head>
+
+<body style="background-color: #E5E5E5">
+    <div style="padding: 30px;">
+        <h2>Student Management System</h2>
+        <div>
+            <form action="./add.html">
+                <input type="text" placeholder="Search.." name="search" class="search-container">
+                <button type="submit" class="btn2">Add</button>
+            </form>
+        </div>
+        <br>
+        <br>
+
+        <hr style="color: #E5E5E5;">
+        <center>
+            <table class="list" id="table">
+                <thead>
+                    <tr>
+
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Location</th>
+                        <th>Email</th>
+                        <th>DOB</th>
+                        <th>Education</th>
+                        <th>Action</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+
+
+
+        </center>
+    </div>
+    <form action="" method="post">
+
+        <label for="fname" class="txtfnt">First Name: </label>
+        <input type="text" id="fname" class="boxfnt">
+
+
+        <label for="lname" class="txtfnt">Last Name: </label>
+        <input type="text" id="lname" class="boxfnt">
+        <br>
+        <br>
+
+        <label for="loc" class="txtfnt">Location: &nbsp;&nbsp;&nbsp;</label>
+        <input type="text" id="loc" class="boxfnt">
+        <br>
+        <br>
+
+        <label for="email" class="txtfnt">Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="text" id="email" class="boxfnt">
+        <br>
+        <br>
+
+        <label for="dob" class="txtfnt">DOB : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="date" id="dob" class="boxfnt">
+        <br>
+        <br>
+
+        <label for="edu" class="txtfnt">Education:&nbsp;&nbsp; </label>
+        <input type="text" id="edu" class="boxfnt">
+        <br>
+        <br>
+
+        <input onclick="bottomFunction()" type="button" id="submit" value="Submit" class="btn2" style="float:left">
+        <br>
+        <br>
+    </form>
+
+    <script type="text/javascript">
+
+        var selectedRow = null
+
+        // Form Submit Function
+        function onFormSubmit() {
+
+            if (validate()) {
+
+                var formData = readFormData();
+
+                if (selectedRow == null) {
+
+                    insertNewRecord(formData);
+                }
+                else {
+
+                    updateRecord(formData);
+                }
+
+                resetForm();
+            }
+        }
+
+        document.getElementById("submit").onclick = function () {
+
+            //  document.getElementById("table").style.display="block";
+
+            var table = document.getElementById("table");
+            var row = table.insertRow(-1);
+            var fname = row.insertCell(0);
+            var lname = row.insertCell(1);
+            var loc = row.insertCell(2);
+            var email = row.insertCell(3);
+            var dob = row.insertCell(4);
+            var edu = row.insertCell(5);
+            var act = row.insertCell(6);
+            var del = row.insertCell(7);
+            fname.innerHTML = document.getElementById("fname").value;
+            lname.innerHTML = document.getElementById("lname").value;
+            loc.innerHTML = document.getElementById("loc").value;
+            email.innerHTML = document.getElementById("email").value;
+            dob.innerHTML = document.getElementById("dob").value;
+            edu.innerHTML = document.getElementById("edu").value;
+            act.innerHTML = `<a onClick="onEdit(this)">Edit</a>`;
+            del.innerHTML = `<a onClick="onDelete(this)">Delete</a>`;
+
+            return false;
+        }
+
+        function bottomFunction() {
+            document.body.scrollBottom = 0;
+            document.documentElement.scrollBottom = 0;
+
+        }
+        function resetForm() {
+            document.getElementById("fname").value = "";
+            document.getElementById("lname").value = "";
+            document.getElementById("loc").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("dob").value = "";
+            document.getElementById("edu").value = "";
+
+            selectedRow = null;
+        }
+        function onEdit(td) {
+            selectedRow = td.parentElement.parentElement;
+            document.getElementById("fname").value = selectedRow.cells[0].innerHTML;
+            document.getElementById("lname").value = selectedRow.cells[1].innerHTML;
+            document.getElementById("loc").value = selectedRow.cells[2].innerHTML;
+            document.getElementById("email").value = selectedRow.cells[3].innerHTML;
+            document.getElementById("dob").value = selectedRow.cells[4].innerHTML;
+            document.getElementById("edu").value = selectedRow.cells[4].innerHTML;
+        }
+        // Update Record
+        function updateRecord(formData) {
+            selectedRow.cells[0].innerHTML = formData.fname;
+            selectedRow.cells[1].innerHTML = formData.lname;
+            selectedRow.cells[2].innerHTML = formData.loc;
+            selectedRow.cells[3].innerHTML = formData.email;
+            selectedRow.cells[4].innerHTML = formData.dob;
+            selectedRow.cells[5].innerHTML = formData.edu;
+        }
+        // Delete Function
+        function onDelete(td) {
+            if (confirm('Are you sure to delete this record ?')) {
+                row = td.parentElement.parentElement;
+                document.getElementById("table").deleteRow(row.rowIndex);
+                resetForm();
+            }
+        }
+    </script>

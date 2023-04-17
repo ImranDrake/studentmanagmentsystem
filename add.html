@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Add Record</title>
+  <link rel="stylesheet" href="./style.css">
+  <!-- <script src="script.js"></script> -->
+</head>
+
+<body>
+
+  <form action="index.html" class="modal-content animate list">
+    <a href="#" class="previous round" onclick="history.back()">&#8249;</a>
+
+    <div class="input">
+
+
+      <label for="fname" class="txtfnt">First Name: </label>
+      <input type="text" id="fname" class="boxfnt">
+
+
+      <label for="lname" class="txtfnt">Last Name: </label>
+      <input type="text" id="lname" class="boxfnt">
+      <br>
+      <br>
+
+      <label for="loc" class="txtfnt">Location: </label>
+      <input type="text" id="loc" class="boxfnt">
+      <br>
+      <br>
+
+      <label for="email" class="txtfnt">Email: </label>
+      <input type="text" id="email" class="boxfnt">
+      <br>
+      <br>
+
+      <label for="dob" class="txtfnt">DOB: </label>
+      <input type="date" id="dob" class="boxfnt">
+      <br>
+      <br>
+
+      <label for="edu" class="txtfnt">Education: </label>
+      <input type="text" id="edu" class="boxfnt">
+      <br>
+      <br>
+
+      <!--<input type="button" id="submit" value="Submit" class="btn2" style="float:left" onclick=""> -->
+      <button type="submit" class="btn2" style="float: left;" onclick="storeData()">Submit</button>
+      <br>
+
+    </div>
+  </form>
+
+
+
+  <table class="list" id="table">
+    <thead>
+      <tr>
+
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Location</th>
+        <th>Email</th>
+        <th>DOB</th>
+        <th>Education</th>
+        <th>Action</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    </tbody>
+  </table>
+
+  <script type="text/javascript">
+
+    document.getElementById("submit").onclick = function () {
+      document.getElementById("table").style.display = "none";
+
+      var table = document.getElementById("table");
+      var row = table.insertRow(-1);
+      var fname = row.insertCell(0);
+      var lname = row.insertCell(1);
+      var loc = row.insertCell(2);
+      var email = row.insertCell(3);
+      var dob = row.insertCell(4);
+      var edu = row.insertCell(5);
+      var act = row.insertCell(6);
+      var del = row.insertCell(7);
+      fname.innerHTML = document.getElementById("fname").value;
+      lname.innerHTML = document.getElementById("lname").value;
+      loc.innerHTML = document.getElementById("loc").value;
+      email.innerHTML = document.getElementById("email").value;
+      dob.innerHTML = document.getElementById("dob").value;
+      edu.innerHTML = document.getElementById("edu").value;
+      act.innerHTML = `<a onClick="onEdit(this)">Edit</a>`;
+      del.innerHTML = `<a onClick="onDelete(this)">Delete</a>`;
+
+      return false;
+    }
+
+    function storeData() {
+      console.log("entering");
+      let data = {
+        fname,
+        lname,
+        loc,
+        email,
+        dob,
+        edu,
+
+      }
+      var locdata = localStorage.getItem("data");
+      localStorage.setItem("data", JSON.stringify(locdata.push(data)));
+      console.log(localStorage.getItem("data"));
+
+    }
+
+
+  </script>
+</body>
+
+</html>
